@@ -12,7 +12,11 @@ connectDB();
 const app = express()
 
 
-app.use(cors())
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}))
 
 app.use(express.json())
 
@@ -21,12 +25,12 @@ app.get('/my-ip', async (req, res) => {
   res.json({ ip });
 });
 // 테스트 라우트 추가
-app.get('/api/test', (req, res) => {
+app.get('/test', (req, res) => {
   res.json({ message: 'API is working!' })
 })
 
-app.use('/api/seating-layouts', seatingLayouts)
-app.use('/api/students', studentsRouter)
+app.use('/seating-layouts', seatingLayouts)
+app.use('/students', studentsRouter)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
